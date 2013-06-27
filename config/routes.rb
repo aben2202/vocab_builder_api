@@ -1,4 +1,23 @@
 VocabBuilder::Application.routes.draw do
+
+  devise_for :users
+
+
+  # /api/... Api::
+  namespace :api , defaults: {format: 'json'} do
+    # /api/v1/... Api::V1::
+    namespace :v1 do
+      post '/login'                 => 'sessions#create'
+      post '/logout'                => 'sessions#destroy'
+
+      post '/signup'                => 'registrations#create'
+
+      devise_for :users
+      get '/users/:id'              => 'users#show'
+      resources :words
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
